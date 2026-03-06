@@ -8,11 +8,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        pearl: "#F4E5D9",
-        sand: "#EBDFCE",
+        pearl: "#FCF8F4",
+        sand: "#F1E8DC",
         sage: "#B2BDA3",
         peach: "#F8D3BB",
-        stone: "#978671"
+        stone: "#4A4135"
       },
       fontFamily: {
         serifLux: ["var(--font-heading)"],
