@@ -41,7 +41,7 @@ export function ServiceCard({ service, onClick }: Props) {
           </div>
           <div className="text-right">
             <p className="uppercase tracking-[0.2em]">From</p>
-            <p className="mt-1 text-base font-medium">${service.priceFrom}</p>
+            <p className="mt-1 text-base font-medium">£{service.priceFrom}</p>
           </div>
         </div>
       </motion.article>

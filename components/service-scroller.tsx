@@ -143,13 +143,22 @@ export function ServiceScroller() {
                 </div>
                 <div className="flex items-center justify-between pt-2 text-sm text-stone/90">
                   <span>From</span>
-                  <span className="font-medium">${selectedService.priceFrom}</span>
+                  <span className="font-medium">£{selectedService.priceFrom}</span>
                 </div>
                 <CursorHover>
                   <motion.button
                     className="btn-primary mt-3 w-full bg-sage text-pearl text-xs uppercase tracking-[0.25em] shadow-peach-glow"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
+                    type="button"
+                    onClick={() => {
+                      setSelectedId(null);
+                      if (typeof document === "undefined") return;
+                      const el = document.getElementById("booking");
+                      if (el) {
+                        el.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }
+                    }}
                   >
                     Book This Ritual
                   </motion.button>

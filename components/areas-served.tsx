@@ -50,12 +50,13 @@ export function AreasServed() {
             Areas Served
           </p>
           <h2 className="font-serifLux text-2xl text-stone md:text-3xl">
-            From hilltops to waterfronts, we meet you where you are.
+            Epsom, Surrey and surrounding areas.
           </h2>
           <p className="text-sm text-stone/80 md:text-base">
-            Currently serving select neighborhoods across the city and nearby
-            coastal escapes. If you don&apos;t see your area listed, reach out
-            to our concierge team and we&apos;ll do our best to accommodate.
+            Currently serving homes, hotels, and private residences across
+            Epsom, Surrey and nearby villages. If you don&apos;t see your area
+            listed, reach out to our concierge team and we&apos;ll do our best
+            to accommodate.
           </p>
         </div>
 
@@ -71,15 +72,16 @@ export function AreasServed() {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 rounded-full bg-pearl/70 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-stone/80">
                 <MapPinned className="h-3.5 w-3.5" />
-                <span>Inner City</span>
+                <span>Epsom & Surrey</span>
               </div>
               <p className="text-xs text-stone/75">
-                7-day availability with limited late-evening appointments.
+                7-day availability with limited evening and weekend
+                appointments.
               </p>
             </div>
             <p className="text-xs text-stone/70">
-              Travel beyond core neighborhoods may include a discreet travel
-              fee, confirmed before booking.
+              Travel beyond our core Epsom radius may include a discreet travel
+              fee, always confirmed before booking.
             </p>
           </div>
           <motion.ul

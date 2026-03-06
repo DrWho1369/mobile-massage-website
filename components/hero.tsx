@@ -40,6 +40,14 @@ export function Hero() {
     y.set(relativeY);
   };
 
+  const scrollToId = (id: string) => {
+    if (typeof document === "undefined") return;
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <motion.section
       id="hero"
@@ -84,6 +92,8 @@ export function Hero() {
                 className="btn-primary bg-sage text-pearl text-xs uppercase tracking-[0.25em] animate-pulse-soft"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
+                type="button"
+                onClick={() => scrollToId("booking")}
               >
                 Begin Booking
               </motion.button>
@@ -93,6 +103,8 @@ export function Hero() {
                 className="btn-ghost text-xs uppercase tracking-[0.25em]"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
+                type="button"
+                onClick={() => scrollToId("services")}
               >
                 Explore Services
               </motion.button>
@@ -119,8 +131,9 @@ export function Hero() {
                 className="object-cover"
               />
             </div>
+            <div className="absolute inset-0 bg-stone/70 mix-blend-multiply" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0,rgba(248,211,187,0.3),transparent_50%),radial-gradient(circle_at_90%_100%,rgba(178,189,163,0.35),transparent_45%)]" />
-            <div className="relative flex h-full flex-col justify-between">
+            <div className="relative z-10 flex h-full flex-col justify-between">
               <div className="space-y-3">
                 <p className="text-xs uppercase tracking-[0.25em] text-pearl/90">
                   Tonight&apos;s Ritual
@@ -139,7 +152,7 @@ export function Hero() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span>Location</span>
-                  <span>Pacific Heights</span>
+                  <span>Epsom, Surrey</span>
                 </div>
                 <div className="mt-2 h-px bg-pearl/20" />
                 <div className="flex items-center justify-between pt-1 text-[11px]">

@@ -30,7 +30,7 @@ export const services = [
     name: "Signature In-Home Massage",
     durationOptions: [60, 90, 120],
     description:
-      "Our most-requested ritual. A personalized blend of Swedish and deep tissue set to calming soundscapes and aromatherapy.",
+      "Our most-requested ritual. A personalised blend of Swedish and deep tissue set to calming soundscapes and aromatherapy.",
     priceFrom: 210,
     tag: "Most loved"
   },
@@ -39,7 +39,7 @@ export const services = [
     name: "Deep Tissue Reset",
     durationOptions: [75, 90],
     description:
-      "Focused pressure and slow, precise techniques to melt muscular knots and support athletic recovery.",
+      "Focused pressure and slow, precise techniques to melt muscular knots and support athletic recovery after long commutes or training.",
     priceFrom: 230,
     tag: "For athletes"
   },
@@ -57,24 +57,24 @@ export const services = [
     name: "Couples Ritual",
     durationOptions: [60, 90],
     description:
-      "Two therapists, two tables, one beautifully synchronized experience curated in the privacy of your space.",
+      "Two therapists, two tables, one beautifully synchronised experience curated in the privacy of your home or hotel.",
     priceFrom: 420,
     tag: "Shared experience"
   }
 ];
 
 export const neighborhoods = [
-  "Pacific Heights",
-  "Nob Hill",
-  "Russian Hill",
-  "Marina",
-  "Cow Hollow",
-  "Presidio Heights",
-  "Noe Valley",
-  "Bernal Heights",
-  "SoMa",
-  "Mission District",
-  "Hayes Valley",
-  "North Beach"
+  "Epsom Town Centre",
+  "Ewell",
+  "Ashtead",
+  "Banstead",
+  "Tadworth",
+  "Leatherhead",
+  "Stoneleigh",
+  "Worcester Park",
+  "Kingswood",
+  "Surbiton",
+  "Kingston upon Thames",
+  "Wimbledon"
 ];
 

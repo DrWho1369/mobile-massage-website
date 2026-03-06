@@ -15,7 +15,7 @@ export function GrainOverlay() {
         </filter>
       </svg>
       <div
-        className="pointer-events-none fixed inset-0 z-10 opacity-[0.08]"
+        className="pointer-events-none fixed inset-0 z-10 opacity-[0.04]"
         style={{ mixBlendMode: "soft-light", filter: "url(#grain)" }}
       />
     </>
