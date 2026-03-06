@@ -31,7 +31,7 @@ export const services = [
     durationOptions: [60, 90, 120],
     description:
       "Our most-requested ritual. A personalised blend of Swedish and deep tissue set to calming soundscapes and aromatherapy.",
-    priceFrom: 210,
+    priceFrom: 50,
     tag: "Most loved"
   },
   {
@@ -40,7 +40,7 @@ export const services = [
     durationOptions: [75, 90],
     description:
       "Focused pressure and slow, precise techniques to melt muscular knots and support athletic recovery after long commutes or training.",
-    priceFrom: 230,
+    priceFrom: 60,
     tag: "For athletes"
   },
   {
@@ -49,7 +49,7 @@ export const services = [
     durationOptions: [60, 90],
     description:
       "A grounding, side-lying massage tailored to each trimester, easing swelling, lower back tension, and restless sleep.",
-    priceFrom: 220,
+    priceFrom: 75,
     tag: "Pre + post-natal"
   },
   {
@@ -58,7 +58,7 @@ export const services = [
     durationOptions: [60, 90],
     description:
       "A premium back-to-back partners ritual: Thomas works with one partner, then the other, in the same space — one beautifully synchronised experience in the privacy of your home or hotel.",
-    priceFrom: 420,
+    priceFrom: 90,
     tag: "Shared experience"
   }
 ];
