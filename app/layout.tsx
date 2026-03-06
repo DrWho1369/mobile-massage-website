@@ -20,8 +20,8 @@ const bodyFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Luxury Mobile Massage | Zen Modern Wellness",
-  description: "Luxury wellness, delivered to your door. Bespoke in-home massage experiences with a Zen Modern aesthetic."
+  title: "Maison Rituals | Luxury Mobile Massage in Surrey",
+  description: "Maison Rituals brings luxury wellness to your door. Bespoke in-home massage experiences in Epsom, Surrey and surrounding areas."
 };
 
 export default function RootLayout({

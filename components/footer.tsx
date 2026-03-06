@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-10 md:flex-row md:items-end md:justify-between">
         <div className="space-y-3">
           <p className="text-xs uppercase tracking-[0.3em] text-pearl/70">
-            Maison Mobile Massage
+            Maison Rituals
           </p>
           <p className="max-w-sm text-sm text-pearl/80">
             A quiet rebellion against rushed spa visits. Thoughtful, in-home
@@ -38,7 +38,7 @@ export function Footer() {
               <Instagram className="h-4 w-4" />
             </a>
             <span className="text-xs text-pearl/60">
-              © {new Date().getFullYear()} Maison Mobile Massage
+              © 2026 Maison Rituals. All rights reserved.
             </span>
           </div>
         </div>

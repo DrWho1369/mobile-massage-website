@@ -28,10 +28,7 @@ export function NavBar() {
       <div className="glass-panel pointer-events-auto flex w-full max-w-5xl items-center justify-between px-5 py-3">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-full bg-sage/80" />
-          <div className="leading-tight">
-            <span className="block text-xs uppercase tracking-[0.25em] text-stone/70">Maison</span>
-            <span className="block text-base font-serifLux text-stone">Mobile Massage</span>
-          </div>
+          <span className="font-serifLux text-lg text-stone">Maison Rituals</span>
         </div>
         <div className="hidden items-center gap-6 md:flex">
           <button
