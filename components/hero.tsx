@@ -157,7 +157,7 @@ export function Hero() {
                 <div className="mt-2 h-px bg-pearl/20" />
                 <div className="flex items-center justify-between pt-1 text-[11px]">
                   <span>Therapist</span>
-                  <span className="font-medium">Amélie · Lead Therapist</span>
+                  <span className="font-medium">Thomas · Lead Massage Therapist</span>
                 </div>
               </div>
             </div>

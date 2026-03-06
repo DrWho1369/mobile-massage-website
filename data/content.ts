@@ -57,7 +57,7 @@ export const services = [
     name: "Couples Ritual",
     durationOptions: [60, 90],
     description:
-      "Two therapists, two tables, one beautifully synchronised experience curated in the privacy of your home or hotel.",
+      "A premium back-to-back partners ritual: Thomas works with one partner, then the other, in the same space — one beautifully synchronised experience in the privacy of your home or hotel.",
     priceFrom: 420,
     tag: "Shared experience"
   }

@@ -4,7 +4,32 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { services } from "@/data/content";
 import { CursorHover } from "@/components/custom-cursor";
-import { CalendarDays, CheckCircle2, MapPin, User2 } from "lucide-react";
+import { CalendarDays, CheckCircle2, MapPin, Phone, User2 } from "lucide-react";
+
+const BOOKING_EMAIL = "tbaker.bhb@gmail.com";
+const BOOKING_PHONE = "07736365252";
+
+function buildMailtoUrl(
+  booking: BookingState,
+  serviceName: string
+): string {
+  const subject = `Booking request: ${serviceName} — ${booking.name}`;
+  const lines = [
+    "Booking request from website",
+    "",
+    `Treatment: ${serviceName}`,
+    `Duration: ${booking.duration ?? ""} minutes`,
+    `Location: ${booking.locationType || ""} ${booking.neighborhood || ""}`.trim(),
+    `Preferred date: ${booking.date || "Flexible"}`,
+    "",
+    `Name: ${booking.name}`,
+    `Email: ${booking.email}`,
+    "",
+    booking.notes ? `Notes:\n${booking.notes}` : ""
+  ].filter(Boolean);
+  const body = lines.join("\n");
+  return `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 type Step = 0 | 1 | 2 | 3 | 4;
 
@@ -68,6 +93,9 @@ export function BookingJourney() {
     if (step < 4) {
       goToStep((step + 1) as Step);
     } else {
+      const serviceName = currentService?.name ?? "Massage";
+      const mailto = buildMailtoUrl(booking, serviceName);
+      window.location.href = mailto;
       setSubmitted(true);
     }
   };
@@ -211,7 +239,7 @@ export function BookingJourney() {
             </div>
 
             {!submitted && (
-              <div className="relative mt-6 flex items-center justify-between gap-4">
+              <div className="relative mt-6 flex flex-wrap items-center justify-between gap-4">
                 <button
                   disabled={step === 0}
                   onClick={() => goToStep((step - 1) as Step)}
@@ -219,17 +247,28 @@ export function BookingJourney() {
                 >
                   Back
                 </button>
-                <CursorHover>
-                  <motion.button
-                    className="btn-primary text-xs uppercase tracking-[0.25em] bg-sage text-pearl disabled:opacity-50"
-                    whileHover={canProceed() ? { scale: 1.03 } : undefined}
-                    whileTap={canProceed() ? { scale: 0.97 } : undefined}
-                    disabled={!canProceed()}
-                    onClick={handleNext}
-                  >
-                    {step === 4 ? "Request Booking" : "Next"}
-                  </motion.button>
-                </CursorHover>
+                <div className="flex items-center gap-3">
+                  {step === 4 && (
+                    <a
+                      href={`tel:${BOOKING_PHONE}`}
+                      className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-stone/70 hover:text-stone"
+                    >
+                      <Phone className="h-3.5 w-3.5" />
+                      Call to book
+                    </a>
+                  )}
+                  <CursorHover>
+                    <motion.button
+                      className="btn-primary text-xs uppercase tracking-[0.25em] bg-sage text-pearl disabled:opacity-50"
+                      whileHover={canProceed() ? { scale: 1.03 } : undefined}
+                      whileTap={canProceed() ? { scale: 0.97 } : undefined}
+                      disabled={!canProceed()}
+                      onClick={handleNext}
+                    >
+                      {step === 4 ? "Request Booking" : "Next"}
+                    </motion.button>
+                  </CursorHover>
+                </div>
               </div>
             )}
           </div>
@@ -258,7 +297,7 @@ export function BookingJourney() {
                   <span className="text-stone/60">Location: </span>
                   <span className="font-medium text-stone">
                     {booking.locationType
-                      ? `${booking.locationType} · ${booking.neighborhood || "Neighborhood pending"}`
+                      ? `${booking.locationType} · ${booking.neighborhood || "Neighbourhood pending"}`
                       : "To be selected"}
                   </span>
                 </li>
@@ -272,9 +311,9 @@ export function BookingJourney() {
             </div>
             <div className="rounded-3xl border border-dashed border-stone/30 bg-pearl/80 p-4">
               <p className="text-[11px] leading-relaxed text-stone/75">
-                Submitting this journey sends your preferences to our concierge
-                team. We&apos;ll confirm availability, any travel fees, and a
-                narrowed arrival window before finalizing payment details.
+                Submitting this journey sends your preferences to Thomas. He&apos;ll
+                confirm availability, any travel fees, and a narrowed arrival
+                window before finalising payment details.
               </p>
             </div>
           </div>
@@ -383,7 +422,7 @@ function StepLocation({ booking, setBooking }: StepProps) {
         Where should we meet you?
       </h3>
       <p className="text-sm text-stone/80">
-        We arrive with everything needed for your ritual — table, linens,
+        Thomas arrives with everything needed for your ritual — table, linens,
         curated music, and aromatherapy.
       </p>
 
@@ -411,7 +450,7 @@ function StepLocation({ booking, setBooking }: StepProps) {
 
       <div className="grid gap-3 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
         <label className="text-xs text-stone/80">
-          Neighborhood or hotel
+          Neighbourhood or hotel
           <input
             type="text"
             value={booking.neighborhood}
@@ -419,7 +458,7 @@ function StepLocation({ booking, setBooking }: StepProps) {
               setBooking((prev) => ({ ...prev, neighborhood: e.target.value }))
             }
             className="mt-1 w-full rounded-full border border-stone/20 bg-pearl/80 px-3 py-2 text-xs outline-none ring-0 placeholder:text-stone/40 focus:border-sage/70"
-            placeholder="e.g. Pacific Heights, Nob Hill, etc."
+            placeholder="e.g. Epsom Town Centre, Ewell, etc."
           />
         </label>
         <label className="text-xs text-stone/80">
@@ -489,7 +528,7 @@ function StepDetails({ booking, setBooking }: StepProps) {
             setBooking((prev) => ({ ...prev, notes: e.target.value }))
           }
           className="mt-1 h-24 w-full resize-none rounded-3xl border border-stone/20 bg-pearl/80 px-3 py-2 text-xs outline-none ring-0 placeholder:text-stone/40 focus:border-sage/70"
-          placeholder="Injuries, preferences, access instructions — anything you’d like us to know."
+          placeholder="Injuries, preferences, access instructions — anything you’d like Thomas to know."
         />
       </label>
     </div>
@@ -570,8 +609,8 @@ function Confirmation() {
         Thank you. Your ritual request is en route.
       </h3>
       <p className="text-sm text-stone/80">
-        Our concierge team will be in touch within a few waking hours to
-        confirm therapist, timing, and any travel details before payment.
+        Thomas will reply within a few waking hours to confirm timing and
+        any travel details before payment.
       </p>
     </div>
   );

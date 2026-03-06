@@ -16,18 +16,18 @@ export function Footer() {
         <div className="space-y-4 text-sm text-pearl/80">
           <div className="flex flex-col gap-2">
             <a
-              href="tel:+14155550123"
+              href="tel:07736365252"
               className="inline-flex items-center gap-2 text-sm text-pearl/80 hover:text-pearl"
             >
               <Phone className="h-4 w-4" />
-              <span>+1 (415) 555-0123</span>
+              <span>07736 365 252</span>
             </a>
             <a
-              href="mailto:concierge@maisonmassage.studio"
+              href="mailto:tbaker.bhb@gmail.com"
               className="inline-flex items-center gap-2 text-sm text-pearl/80 hover:text-pearl"
             >
               <Mail className="h-4 w-4" />
-              <span>concierge@maisonmassage.studio</span>
+              <span>tbaker.bhb@gmail.com</span>
             </a>
           </div>
           <div className="flex items-center gap-3">

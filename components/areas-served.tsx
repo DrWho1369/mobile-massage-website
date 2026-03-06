@@ -55,8 +55,8 @@ export function AreasServed() {
           <p className="text-sm text-stone/80 md:text-base">
             Currently serving homes, hotels, and private residences across
             Epsom, Surrey and nearby villages. If you don&apos;t see your area
-            listed, reach out to our concierge team and we&apos;ll do our best
-            to accommodate.
+            listed, message Thomas directly and he&apos;ll do his best to
+            accommodate.
           </p>
         </div>
 
