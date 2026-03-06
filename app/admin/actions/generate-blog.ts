@@ -118,6 +118,7 @@ export async function generateBlogDraft(): Promise<GenerateResult> {
 
     revalidatePath("/admin");
     revalidatePath("/journal");
+    revalidatePath("/");
     return { postId: inserted.id };
   } catch (e) {
     return {
@@ -212,6 +213,7 @@ export async function regeneratePost(id: string): Promise<RegenerateResult> {
     revalidatePath("/admin");
     revalidatePath("/journal");
     revalidatePath("/journal/[slug]");
+    revalidatePath("/");
     return {};
   } catch (e) {
     return {

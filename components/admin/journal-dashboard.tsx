@@ -27,7 +27,7 @@ export function JournalDashboard({ initialPosts }: Props) {
   const [posts, setPosts] = useState(initialPosts);
   const [error, setError] = useState<string | null>(null);
   const [generateLoading, setGenerateLoading] = useState(false);
-  const [regeneratingId, setRegeneratingId] = useState<string | null>(null);
+  const [regeneratingIds, setRegeneratingIds] = useState<Set<string>>(() => new Set());
 
   const drafts = posts.filter((p) => !p.is_published);
   const published = posts.filter((p) => p.is_published);
@@ -55,10 +55,11 @@ export function JournalDashboard({ initialPosts }: Props) {
       )
     )
       return;
+    const id = post.id;
     setError(null);
-    setRegeneratingId(post.id);
+    setRegeneratingIds((prev) => new Set(prev).add(id));
     try {
-      const result = await regeneratePost(post.id);
+      const result = await regeneratePost(id);
       if (result.error) {
         setError(result.error);
         return;
@@ -66,7 +67,11 @@ export function JournalDashboard({ initialPosts }: Props) {
       const { posts: nextPosts } = await getPosts();
       setPosts(nextPosts);
     } finally {
-      setRegeneratingId(null);
+      setRegeneratingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
     }
   }
 
@@ -198,12 +203,12 @@ export function JournalDashboard({ initialPosts }: Props) {
                     </Link>
                     <button
                       type="button"
-                      disabled={regeneratingId === p.id}
+                      disabled={regeneratingIds.has(p.id)}
                       onClick={() => handleRegenerate(p)}
                       className="inline-flex items-center gap-2 rounded-full border border-stone/20 bg-pearl/60 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-stone/70 hover:text-stone disabled:opacity-60"
                     >
-                      <RefreshCw className={`h-4 w-4 ${regeneratingId === p.id ? "animate-spin" : ""}`} />
-                      {regeneratingId === p.id ? "Rewriting… (about 15 seconds)" : "Regenerate (AI)"}
+                      <RefreshCw className={`h-4 w-4 ${regeneratingIds.has(p.id) ? "animate-spin" : ""}`} />
+                      {regeneratingIds.has(p.id) ? "Rewriting… (about 15 seconds)" : "Regenerate (AI)"}
                     </button>
                     <Link
                       href={`/journal/${p.slug}`}

@@ -50,6 +50,7 @@ export async function publishPost(id: string): Promise<{ error?: string }> {
     revalidatePath("/admin");
     revalidatePath("/journal");
     revalidatePath("/journal/[slug]");
+    revalidatePath("/");
     return {};
   } catch (e) {
     return {
@@ -101,6 +102,7 @@ export async function updatePost(
     revalidatePath("/admin");
     revalidatePath("/journal");
     revalidatePath("/journal/[slug]");
+    revalidatePath("/");
     return {};
   } catch (e) {
     return {
