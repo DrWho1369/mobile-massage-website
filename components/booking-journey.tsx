@@ -20,7 +20,7 @@ function buildMailtoUrl(
     `Treatment: ${serviceName}`,
     `Duration: ${booking.duration ?? ""} minutes`,
     `Location: ${booking.locationType || ""} ${booking.neighborhood || ""}`.trim(),
-    `Preferred date: ${booking.date || "Flexible"}`,
+    `Preferred date: ${formatDateForDisplay(booking.date)}`,
     "",
     `Name: ${booking.name}`,
     `Email: ${booking.email}`,
@@ -73,6 +73,14 @@ const cardVariants = {
 };
 
 const stepsLabels = ["Treatment", "Duration", "Location", "Details", "Review"];
+
+/** Format YYYY-MM-DD to DD/MM/YYYY for UK display; empty string returns "Flexible". */
+function formatDateForDisplay(date: string): string {
+  if (!date || !date.trim()) return "Flexible";
+  const [y, m, d] = date.split("-");
+  if (!d) return date;
+  return `${d}/${m}/${y}`;
+}
 
 export function BookingJourney() {
   const [step, setStep] = useState<Step>(0);
@@ -304,7 +312,7 @@ export function BookingJourney() {
                 <li>
                   <span className="text-stone/60">Preferred date: </span>
                   <span className="font-medium text-stone">
-                    {booking.date || "Flexible"}
+                    {formatDateForDisplay(booking.date)}
                   </span>
                 </li>
               </ul>
@@ -463,16 +471,21 @@ function StepLocation({ booking, setBooking }: StepProps) {
         </label>
         <label className="text-xs text-stone/80">
           Ideal date
-          <div className="mt-1 flex items-center gap-2 rounded-full border border-stone/20 bg-pearl/80 px-3 py-2 text-xs">
-            <CalendarDays className="h-4 w-4 text-stone/60" />
+          <div
+            className="relative mt-1 flex cursor-pointer items-center gap-2 rounded-full border border-stone/20 bg-pearl/80 px-3 py-2 text-xs text-stone focus-within:border-sage/70"
+            onClick={(e) => {
+              const target = (e.currentTarget as HTMLElement).querySelector<HTMLInputElement>('input[type="date"]');
+              target?.showPicker?.();
+            }}
+          >
+            <CalendarDays className="h-4 w-4 shrink-0 text-stone/60" />
             <input
-              type="text"
+              type="date"
               value={booking.date}
               onChange={(e) =>
                 setBooking((prev) => ({ ...prev, date: e.target.value }))
               }
-              className="w-full bg-transparent outline-none placeholder:text-stone/40"
-              placeholder="Flexible, or a specific date"
+              className="w-full min-w-0 flex-1 bg-transparent text-stone outline-none [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full"
             />
           </div>
         </label>
@@ -575,7 +588,7 @@ function StepReview({
           <li>
             <span className="text-stone/60">Preferred date: </span>
             <span className="font-medium">
-              {booking.date || "Flexible"}
+              {formatDateForDisplay(booking.date)}
             </span>
           </li>
           <li>

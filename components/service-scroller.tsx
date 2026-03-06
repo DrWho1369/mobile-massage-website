@@ -1,20 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { services } from "@/data/content";
 import { Sparkles, X } from "lucide-react";
 import { ServiceCard } from "@/components/service-card";
 import { CursorHover } from "@/components/custom-cursor";
 
 export function ServiceScroller() {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start center", "end center"]
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const selectedService = selectedId
@@ -25,10 +18,9 @@ export function ServiceScroller() {
     <section
       id="services"
       className="relative bg-sand/60 py-20 md:py-28"
-      ref={sectionRef}
     >
-      <div className="pointer-events-none sticky top-16 z-10 mx-auto flex h-[420px] max-w-6xl flex-col gap-8 px-4 md:h-[460px]">
-        <div className="flex items-baseline justify-between">
+      <div className="mx-auto max-w-6xl flex-col gap-8 px-4">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between">
           <div className="space-y-3">
             <p className="text-xs uppercase tracking-[0.3em] text-stone/70" data-reveal-child>
               Service Menu
@@ -37,65 +29,25 @@ export function ServiceScroller() {
               Curated rituals for every season of you.
             </h2>
           </div>
-          <div className="hidden items-center gap-2 text-xs text-stone/70 md:flex">
-            <Sparkles className="h-4 w-4" />
-            <span>Tap a card to open</span>
+          <div className="flex items-center gap-2 text-xs text-stone/70">
+            <Sparkles className="h-4 w-4 shrink-0" />
+            <span>Scroll or swipe to explore • Tap to open</span>
           </div>
         </div>
-        <div className="relative flex-1 overflow-hidden rounded-3xl">
-          <div className="pointer-events-auto absolute inset-0 hidden md:block">
-            <motion.div
-              className="flex h-full items-stretch gap-6 px-1"
-              style={{ x }}
+        <div
+          className="no-scrollbar flex h-[420px] gap-6 overflow-x-auto px-4 snap-x snap-mandatory md:h-[460px]"
+        >
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className="h-full w-[280px] snap-center flex-shrink-0"
             >
-              {services.map((service) => (
-                <ServiceCard
-                  key={service.id}
-                  service={service}
-                  onClick={() => setSelectedId(service.id)}
-                />
-              ))}
-            </motion.div>
-          </div>
-
-          <div className="pointer-events-auto no-scrollbar flex h-full gap-4 overflow-x-auto px-1 md:hidden">
-            {services.map((service) => (
-              <CursorHover key={service.id}>
-                <article
-                  className="glass-panel flex h-full min-w-[260px] max-w-[280px] cursor-pointer flex-col justify-between bg-pearl/80 p-5 shadow-soft-elevated"
-                  onClick={() => setSelectedId(service.id)}
-                >
-                  <div className="space-y-3">
-                    {service.tag && (
-                      <span className="inline-flex rounded-full bg-peach/40 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-stone/80">
-                        {service.tag}
-                      </span>
-                    )}
-                    <h3 className="font-serifLux text-lg text-stone">
-                      {service.name}
-                    </h3>
-                    <p className="text-xs text-stone/80">
-                      {service.description}
-                    </p>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between text-[11px] text-stone/80">
-                    <div>
-                      <p className="uppercase tracking-[0.2em]">Durations</p>
-                      <p className="mt-1">
-                        {service.durationOptions.join(" / ")} min
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="uppercase tracking-[0.2em]">From</p>
-                      <p className="mt-1 text-sm font-medium">
-                        ${service.priceFrom}
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              </CursorHover>
-            ))}
-          </div>
+              <ServiceCard
+                service={service}
+                onClick={() => setSelectedId(service.id)}
+              />
+            </div>
+          ))}
         </div>
       </div>
 
