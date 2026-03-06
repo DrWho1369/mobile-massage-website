@@ -1,7 +1,8 @@
 import { isAdminAuthed } from "@/lib/admin-auth";
 import { getReviews } from "@/app/admin/actions";
+import { getPosts } from "@/app/admin/actions/blog";
 import { AdminLogin } from "@/components/admin/admin-login";
-import { ReviewsDashboard } from "@/components/admin/reviews-dashboard";
+import { AdminTabs } from "@/components/admin/admin-tabs";
 
 export default async function AdminPage() {
   const authed = await isAdminAuthed();
@@ -24,7 +25,10 @@ export default async function AdminPage() {
     );
   }
 
-  const { reviews, error } = await getReviews();
+  const [{ reviews, error: reviewError }, { posts }] = await Promise.all([
+    getReviews(),
+    getPosts()
+  ]);
 
   return (
     <div className="min-h-screen bg-pearl px-4 pb-20 pt-28 text-stone">
@@ -34,10 +38,11 @@ export default async function AdminPage() {
             Admin
           </p>
         </div>
-        {error && (
-          <p className="mb-4 text-sm text-peach">{error}</p>
-        )}
-        <ReviewsDashboard initialReviews={reviews} />
+        <AdminTabs
+          initialReviews={reviews}
+          initialPosts={posts}
+          reviewError={reviewError}
+        />
       </div>
     </div>
   );
