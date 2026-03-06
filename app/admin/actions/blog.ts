@@ -82,7 +82,7 @@ export async function getPostById(id: string): Promise<{ post: Post | null; erro
 
 export async function updatePost(
   id: string,
-  updates: { title?: string; content?: string; image_url?: string }
+  updates: { title?: string; content?: string; image_url?: string | null }
 ): Promise<{ error?: string }> {
   try {
     const authed = await isAdminAuthed();

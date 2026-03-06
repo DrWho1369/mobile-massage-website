@@ -1,9 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { isAdminAuthed } from "@/lib/admin-auth";
 import { getPostById } from "@/app/admin/actions/blog";
-import { PublishPostButton } from "./publish-post-button";
+import { JournalPostEditor } from "./journal-post-editor";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -26,38 +25,8 @@ export default async function AdminJournalPostPage({ params }: Props) {
             ← Admin
           </Link>
         </div>
-        <article className="space-y-6">
-          <header>
-            <h1 className="font-serifLux text-2xl text-stone sm:text-3xl">
-              {post.title}
-            </h1>
-            <p className="mt-2 text-xs uppercase tracking-[0.2em] text-stone/60">
-              Draft · {new Date(post.created_at).toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric"
-              })}
-            </p>
-          </header>
-          {post.image_url && (
-            <div className="relative aspect-video overflow-hidden rounded-2xl bg-stone/10">
-              <Image
-                src={post.image_url}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 672px"
-              />
-            </div>
-          )}
-          <div className="prose prose-stone max-w-none font-sansClean text-stone/90">
-            <pre className="whitespace-pre-wrap rounded-2xl border border-stone/15 bg-sand/30 p-6 text-sm">
-              {post.content}
-            </pre>
-          </div>
-          <div className="pt-4">
-            <PublishPostButton postId={post.id} />
-          </div>
+        <article>
+          <JournalPostEditor post={post} />
         </article>
       </div>
     </div>
