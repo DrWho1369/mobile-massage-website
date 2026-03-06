@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { CursorHover } from "@/components/custom-cursor";
 
@@ -45,6 +46,12 @@ export function NavBar() {
           >
             Services
           </button>
+          <Link
+            href="/journal"
+            className="text-xs uppercase tracking-[0.2em] text-stone/70 hover:text-stone"
+          >
+            Journal
+          </Link>
           <CursorHover>
             <motion.button
               type="button"

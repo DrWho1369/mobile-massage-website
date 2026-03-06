@@ -16,6 +16,12 @@ export function Footer() {
         <div className="space-y-4 text-sm text-pearl/80">
           <div className="flex flex-col gap-2">
             <a
+              href="/journal"
+              className="inline-flex text-sm text-pearl/80 hover:text-pearl"
+            >
+              Journal
+            </a>
+            <a
               href="tel:07736365252"
               className="inline-flex items-center gap-2 text-sm text-pearl/80 hover:text-pearl"
             >

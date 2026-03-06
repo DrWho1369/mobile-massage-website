@@ -21,6 +21,14 @@ export default async function JournalPage() {
   return (
     <div className="min-h-screen bg-pearl px-4 pb-20 pt-28 text-stone">
       <div className="mx-auto max-w-5xl">
+        <div className="mb-8">
+          <Link
+            href="/"
+            className="text-xs uppercase tracking-[0.2em] text-stone/70 hover:text-stone"
+          >
+            ← Maison Rituals
+          </Link>
+        </div>
         <header className="mb-12">
           <p className="text-xs uppercase tracking-[0.3em] text-stone/70">
             Journal
