@@ -65,12 +65,12 @@ export async function generateBlogDraft(): Promise<GenerateResult> {
       try {
         const res = await fetch(
           `https://api.unsplash.com/search/photos?query=${encodeURIComponent(imageSearchTerm)}&per_page=1`,
-          { headers: { Authorization: `Client-ID ${unsplashKey}` } }
+          { headers: { Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}` } }
         );
+        const data = (await res.json()) as { results?: Array<{ urls?: { regular?: string; full?: string } }> };
+        console.log("Unsplash Response:", data);
         if (res.ok) {
-          const json = (await res.json()) as { results?: Array<{ urls?: { regular?: string; full?: string } }> };
-          const first = json.results?.[0];
-          imageUrl = first?.urls?.regular ?? first?.urls?.full ?? null;
+          imageUrl = data.results?.[0]?.urls?.regular || null;
         }
       } catch {
         // non-fatal; continue without image
