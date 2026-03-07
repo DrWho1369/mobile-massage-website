@@ -248,6 +248,7 @@ export function BookingJourney() {
             {!submitted && (
               <div className="relative mt-6 flex flex-wrap items-center justify-between gap-4">
                 <button
+                  type="button"
                   disabled={step === 0}
                   onClick={() => goToStep((step - 1) as Step)}
                   className="text-xs uppercase tracking-[0.2em] text-stone/60 disabled:opacity-40"
@@ -264,27 +265,49 @@ export function BookingJourney() {
                       Call to book
                     </a>
                   )}
-                  <CursorHover>
-                    <motion.button
-                      type="button"
-                      className={`btn-primary text-xs uppercase tracking-[0.25em] bg-sage text-pearl disabled:opacity-50 transition-opacity duration-200 ${isPending ? "opacity-80" : ""}`}
-                      whileHover={canProceed() && !isPending ? { scale: 1.03 } : undefined}
-                      whileTap={canProceed() && !isPending ? { scale: 0.97 } : undefined}
-                      disabled={!canProceed() || isPending}
-                      onClick={handleNext}
+                  {step === 4 ? (
+                    <form
+                      className="contents"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (!canProceed() || isPending) return;
+                        handleNext();
+                      }}
                     >
-                      {isPending ? (
-                        <>
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                          Sending…
-                        </>
-                      ) : step === 4 ? (
-                        "Request Booking"
-                      ) : (
-                        "Next"
-                      )}
-                    </motion.button>
-                  </CursorHover>
+                      <CursorHover>
+                        <motion.button
+                          type="submit"
+                          className={`btn-primary text-xs uppercase tracking-[0.25em] bg-sage text-pearl disabled:opacity-50 transition-opacity duration-200 ${isPending ? "opacity-80" : ""}`}
+                          whileHover={canProceed() && !isPending ? { scale: 1.03 } : undefined}
+                          whileTap={canProceed() && !isPending ? { scale: 0.97 } : undefined}
+                          disabled={!canProceed() || isPending}
+                        >
+                          {isPending ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Sending…
+                            </>
+                          ) : (
+                            "Request Booking"
+                          )}
+                        </motion.button>
+                      </CursorHover>
+                    </form>
+                  ) : (
+                    <CursorHover>
+                      <motion.button
+                        type="button"
+                        className="btn-primary text-xs uppercase tracking-[0.25em] bg-sage text-pearl disabled:opacity-50 transition-opacity duration-200"
+                        whileHover={canProceed() ? { scale: 1.03 } : undefined}
+                        whileTap={canProceed() ? { scale: 0.97 } : undefined}
+                        disabled={!canProceed()}
+                        onClick={handleNext}
+                      >
+                        Next
+                      </motion.button>
+                    </CursorHover>
+                  )}
                 </div>
               </div>
             )}
