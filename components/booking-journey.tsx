@@ -1,35 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { services } from "@/data/content";
+import { submitBooking } from "@/app/actions/submit-booking";
 import { CursorHover } from "@/components/custom-cursor";
-import { CalendarDays, CheckCircle2, MapPin, Phone, User2 } from "lucide-react";
+import { CalendarDays, CheckCircle2, Loader2, Phone, User2 } from "lucide-react";
 
-const BOOKING_EMAIL = "tbaker.bhb@gmail.com";
 const BOOKING_PHONE = "07736365252";
-
-function buildMailtoUrl(
-  booking: BookingState,
-  serviceName: string
-): string {
-  const subject = `Booking request: ${serviceName} — ${booking.name}`;
-  const lines = [
-    "Booking request from website",
-    "",
-    `Treatment: ${serviceName}`,
-    `Duration: ${booking.duration ?? ""} minutes`,
-    `Location: ${booking.locationType || ""} ${booking.neighborhood || ""}`.trim(),
-    `Preferred date: ${formatDateForDisplay(booking.date)}`,
-    "",
-    `Name: ${booking.name}`,
-    `Email: ${booking.email}`,
-    "",
-    booking.notes ? `Notes:\n${booking.notes}` : ""
-  ].filter(Boolean);
-  const body = lines.join("\n");
-  return `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
 
 type Step = 0 | 1 | 2 | 3 | 4;
 
@@ -87,6 +65,8 @@ export function BookingJourney() {
   const [direction, setDirection] = useState(1);
   const [booking, setBooking] = useState<BookingState>(initialState);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const currentService = booking.serviceId
     ? services.find((s) => s.id === booking.serviceId) ?? null
@@ -95,16 +75,31 @@ export function BookingJourney() {
   const goToStep = (next: Step) => {
     setDirection(next > step ? 1 : -1);
     setStep(next);
+    setSubmitError(null);
   };
 
   const handleNext = () => {
     if (step < 4) {
       goToStep((step + 1) as Step);
     } else {
-      const serviceName = currentService?.name ?? "Massage";
-      const mailto = buildMailtoUrl(booking, serviceName);
-      window.location.href = mailto;
-      setSubmitted(true);
+      setSubmitError(null);
+      startTransition(async () => {
+        const result = await submitBooking({
+          serviceId: booking.serviceId,
+          duration: booking.duration,
+          locationType: booking.locationType,
+          neighborhood: booking.neighborhood,
+          date: booking.date,
+          name: booking.name,
+          email: booking.email,
+          notes: booking.notes
+        });
+        if (result.success) {
+          setSubmitted(true);
+        } else {
+          setSubmitError(result.error);
+        }
+      });
     }
   };
 
@@ -246,6 +241,9 @@ export function BookingJourney() {
               </AnimatePresence>
             </div>
 
+            {submitError && (
+              <p className="mt-4 text-sm text-peach">{submitError}</p>
+            )}
             {!submitted && (
               <div className="relative mt-6 flex flex-wrap items-center justify-between gap-4">
                 <button
@@ -267,13 +265,22 @@ export function BookingJourney() {
                   )}
                   <CursorHover>
                     <motion.button
-                      className="btn-primary text-xs uppercase tracking-[0.25em] bg-sage text-pearl disabled:opacity-50"
-                      whileHover={canProceed() ? { scale: 1.03 } : undefined}
-                      whileTap={canProceed() ? { scale: 0.97 } : undefined}
-                      disabled={!canProceed()}
+                      className={`btn-primary text-xs uppercase tracking-[0.25em] bg-sage text-pearl disabled:opacity-50 transition-opacity duration-200 ${isPending ? "opacity-80" : ""}`}
+                      whileHover={canProceed() && !isPending ? { scale: 1.03 } : undefined}
+                      whileTap={canProceed() && !isPending ? { scale: 0.97 } : undefined}
+                      disabled={!canProceed() || isPending}
                       onClick={handleNext}
                     >
-                      {step === 4 ? "Request Booking" : "Next"}
+                      {isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Sending…
+                        </>
+                      ) : step === 4 ? (
+                        "Request Booking"
+                      ) : (
+                        "Next"
+                      )}
                     </motion.button>
                   </CursorHover>
                 </div>
@@ -611,19 +618,19 @@ function StepReview({
 
 function Confirmation() {
   return (
-    <div className="space-y-4 text-center">
+    <div className="space-y-6 py-4 text-center">
       <div className="flex justify-center">
         <div className="relative">
-          <div className="h-14 w-14 rounded-full bg-sage/15" />
-          <CheckCircle2 className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 text-sage" />
+          <div className="h-16 w-16 rounded-full bg-sage/15" />
+          <CheckCircle2 className="absolute left-1/2 top-1/2 h-11 w-11 -translate-x-1/2 -translate-y-1/2 text-sage" />
         </div>
       </div>
-      <h3 className="font-serifLux text-xl text-stone">
+      <h3 className="font-serifLux text-2xl text-stone sm:text-3xl">
         Thank you. Your ritual request is en route.
       </h3>
-      <p className="text-sm text-stone/80">
-        Thomas will reply within a few waking hours to confirm timing and
-        any travel details before payment.
+      <p className="text-sm text-stone/80 max-w-md mx-auto">
+        Thomas will be in touch shortly to confirm your appointment and any
+        travel details.
       </p>
     </div>
   );
