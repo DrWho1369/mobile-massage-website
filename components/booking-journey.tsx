@@ -82,6 +82,7 @@ export function BookingJourney() {
     if (step < 4) {
       goToStep((step + 1) as Step);
     } else {
+      // Submit via Server Action only (Trello card + optional Supabase). No mailto.
       setSubmitError(null);
       startTransition(async () => {
         const result = await submitBooking({
@@ -97,7 +98,7 @@ export function BookingJourney() {
         if (result.success) {
           setSubmitted(true);
         } else {
-          setSubmitError(result.error);
+          setSubmitError(result.error ?? "Something went wrong.");
         }
       });
     }
@@ -265,6 +266,7 @@ export function BookingJourney() {
                   )}
                   <CursorHover>
                     <motion.button
+                      type="button"
                       className={`btn-primary text-xs uppercase tracking-[0.25em] bg-sage text-pearl disabled:opacity-50 transition-opacity duration-200 ${isPending ? "opacity-80" : ""}`}
                       whileHover={canProceed() && !isPending ? { scale: 1.03 } : undefined}
                       whileTap={canProceed() && !isPending ? { scale: 0.97 } : undefined}
