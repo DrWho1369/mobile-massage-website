@@ -5,9 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { services } from "@/data/content";
 import { submitBooking } from "@/app/actions/submit-booking";
 import { CursorHover } from "@/components/custom-cursor";
-import { CalendarDays, CheckCircle2, Loader2, Phone, User2 } from "lucide-react";
-
-const BOOKING_PHONE = "07736365252";
+import { CalendarDays, CheckCircle2, Loader2, MessageCircleMore, User2 } from "lucide-react";
 
 type Step = 0 | 1 | 2 | 3 | 4;
 
@@ -258,11 +256,13 @@ export function BookingJourney() {
                 <div className="flex items-center gap-3">
                   {step === 4 && (
                     <a
-                      href={`tel:${BOOKING_PHONE}`}
-                      className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-stone/70 hover:text-stone"
+                      href="https://wa.me/message/KO7VVKMYF53JB1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-stone/70 transition-colors hover:text-sage"
                     >
-                      <Phone className="h-3.5 w-3.5" />
-                      Call to book
+                      <MessageCircleMore className="h-3.5 w-3.5" />
+                      WhatsApp Us
                     </a>
                   )}
                   {step === 4 ? (

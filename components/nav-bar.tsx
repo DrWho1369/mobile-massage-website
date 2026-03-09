@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CursorHover } from "@/components/custom-cursor";
+import { MessageCircleMore } from "lucide-react";
 
 const navVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -52,6 +53,15 @@ export function NavBar() {
           >
             Journal
           </Link>
+          <a
+            href="https://wa.me/message/KO7VVKMYF53JB1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] text-stone/70 transition-colors hover:text-sage"
+          >
+            <MessageCircleMore className="h-3.5 w-3.5" />
+            <span>WhatsApp Us</span>
+          </a>
           <CursorHover>
             <motion.button
               type="button"

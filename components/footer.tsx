@@ -1,4 +1,4 @@
-import { Instagram, Phone, Mail } from "lucide-react";
+import { Instagram, Mail, MessageCircleMore } from "lucide-react";
 
 export function Footer() {
   return (
@@ -22,11 +22,13 @@ export function Footer() {
               Journal
             </a>
             <a
-              href="tel:07736365252"
-              className="inline-flex items-center gap-2 text-sm text-pearl/80 hover:text-pearl"
+              href="https://wa.me/message/KO7VVKMYF53JB1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-pearl/80 transition-colors hover:text-sage"
             >
-              <Phone className="h-4 w-4" />
-              <span>07736 365 252</span>
+              <MessageCircleMore className="h-4 w-4" />
+              <span>WhatsApp Concierge</span>
             </a>
             <a
               href="mailto:tbaker.bhb@gmail.com"
